@@ -10,7 +10,7 @@ int main() {
     for(int i=0;i<n;i++) cin>>a[i];
 
     int mx=INT_MIN;
-    for(int j=0;j<100;j++) {
+    for(int j=0;j<26;j++) {
         // cout<<j+1<<" ";
         for(int i=0;i<n;i++) {
             if(s[i]+a[i]>'Z') s[i]+=a[i]-26;
