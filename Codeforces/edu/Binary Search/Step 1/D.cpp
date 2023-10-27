@@ -1,36 +1,47 @@
-/* 
+/*
 
-NO STL
+// NO STL
 
 #include <bits/stdc++.h>
 
 using namespace std;
 
-void func(int &a, int &b) {
-    int temp = a;
-    a = b;
-    b = temp;
-}
-
-int p(vector<int> &a, int start, int end) {
-    int pivot = a[end];
-    int i = start - 1;
-    for(int j=start;j<end;j++) {
-        if(a[j]<pivot) {
-            i++;
-            func(a[i],a[j]);
+void merge(vector<int> &l, vector<int> &r, vector<int> &a) {
+    int ln = a.size()/2;
+    int rn = a.size()-ln;
+    int li=0,ri=0,i=0;
+    while(li<ln and ri<rn) {
+        if(l[li]<r[ri]) {
+            a[i]=l[li];
+            li++;
+        } else {
+            a[i]=r[ri];
+            ri++;
         }
+        i++;
     }
-    i++;
-    func(a[i],a[end]);
-    return i;
+    while(li<ln) {
+        a[i]=l[li];
+        li++;
+        i++;
+    }
+    while(ri<rn) {
+        a[i]=r[ri];
+        ri++;
+        i++;
+    }
 }
 
-void qs(vector<int> &a, int start, int end) {
-    if(start>=end) return;
-    int pivot = p(a,start,end);
-    qs(a, start, pivot - 1);
-    qs(a, pivot + 1, end);
+void ms(vector<int> &a) {
+    int n = a.size();
+    if(n<=1) return;
+    int mid = n/2;
+    vector<int> l(mid),r(n-mid);
+    for(int i=0;i<mid;i++) l[i]=a[i];
+    for(int i=mid;i<n;i++) r[i-mid]=a[i];
+    ms(l);
+    ms(r);
+    merge(l,r,a);
 }
 
 int lpos(vector<int> &a, int x) {
@@ -62,7 +73,7 @@ int main() {
     int n;cin>>n;
     vector<int> a(n);
     for(int i=0;i<n;i++) cin>>a[i];
-    qs(a, 0, n-1);
+    ms(a);
     int k;cin>>k;
     while(k--) {
         int x,y;cin>>x>>y;
@@ -73,8 +84,6 @@ int main() {
 }
 
 */
-
-
 
 // STL
 
