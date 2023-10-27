@@ -2,12 +2,9 @@
 
 using namespace std;
 
-int main(){
-    ios::sync_with_stdio(false); cin.tie(0);
-
-    int x,y;
-    cin>>x>>y;
-    cout<<x+y<<endl;
-
+int main() {
+    cin.tie(nullptr)->sync_with_stdio(false);
+    int a,b;cin>>a>>b;
+    cout<<a+b<<'\n';
     return 0;
 }

@@ -2,25 +2,12 @@
 
 using namespace std;
 
-int main(){
-    ios::sync_with_stdio(false); cin.tie(0);
-    int n,mn,mx;
-    cin>>n;
-    for(int i=1;i<=n;i++){
-        int temp;
-        cin>>temp;
-        if(i==1){
-            mx=temp;
-            mn=temp;
-            continue;
-        }
-        if(temp>mx){
-            mx=temp;
-        }
-        if(temp<mn){
-            mn=temp;
-        }
-    }
-    cout<<mn<<endl;
-    cout<<mx<<endl;
+int main() {
+    cin.tie(nullptr)->sync_with_stdio(false);
+    int n;cin>>n;
+    vector<int> a(n);
+    for(int i=0;i<n;i++) cin>>a[i];
+    cout<<*min_element(a.begin(),a.end())<<'\n';
+    cout<<*max_element(a.begin(),a.end())<<'\n';
+    return 0;
 }

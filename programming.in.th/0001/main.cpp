@@ -2,33 +2,12 @@
 
 using namespace std;
 
-int main(){
-    ios::sync_with_stdio(false); cin.tie(0);
-    
-    int a,b,c;
-
-    cin>>a>>b>>c;
-
-    int score = a+b+c;
-    string grade;
-
-    if (score<=100 && score>=80){
-        grade = "A";
-    }else if(score>=75){
-        grade = "B+";
-    }else if(score>=70){
-        grade = "B";
-    }else if(score>=65){
-        grade = "C+";
-    }else if(score>=60){
-        grade = "C";
-    }else if(score>=55){
-        grade = "D+";
-    }else if(score>=50){
-        grade = "D";
-    }else{
-        grade = "F";
-    }
-
-    cout<<grade<<endl;
+int main() {
+    cin.tie(nullptr)->sync_with_stdio(false);
+    int a,b,c;cin>>a>>b>>c;
+    int sum=a+b+c;
+    vector<string> ans = {"A","B+","B","C+","C","D+","D","F"};
+    vector<int> check = {80,75,70,65,60,55,50,0};
+    for(int i=0;i<check.size();i++) if(sum>=check[i]) {cout<<ans[i]<<'\n';break;}
+    return 0;
 }
