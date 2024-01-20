@@ -1,17 +1,17 @@
 #include <bits/stdc++.h>
 
 using namespace std;
+using ll = long long;
 
 struct edge {
     int u,v,w;
 };
 
 bool cmp(const edge &l, const edge &r) {
-    return l.w < r.w;
+    return l.w > r.w;
 }
 
-const int N = 100 + 10;
-
+const int N = 2e5 + 10;
 vector<edge> a;
 int parent[N], sz[N];
 
@@ -43,10 +43,10 @@ int main() {
         a.push_back({u,v,w});
     }
     sort(a.begin(), a.end(), cmp);
-    int ans = 0;
+    ll ans = 0;
     for(int i=0;i<m;i++) {
         if(findSet(a[i].u) != findSet(a[i].v)) {
-            ans += a[i].w;
+            ans += a[i].w - 1;
             unionSet(a[i].u, a[i].v);
         }
     }

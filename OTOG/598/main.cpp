@@ -10,7 +10,7 @@ bool cmp(const edge &l, const edge &r) {
     return l.w < r.w;
 }
 
-const int N = 100 + 10;
+const int N = 5e5 + 10;
 
 vector<edge> a;
 int parent[N], sz[N];
