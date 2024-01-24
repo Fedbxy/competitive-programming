@@ -1,3 +1,5 @@
+// kruskal
+/*
 #include <bits/stdc++.h>
 
 using namespace std;
@@ -48,6 +50,53 @@ int main() {
         if(findSet(a[i].u) != findSet(a[i].v)) {
             ans += a[i].w;
             unionSet(a[i].u, a[i].v);
+        }
+    }
+    cout<<ans<<'\n';
+    return 0;
+}
+*/
+
+// prim
+
+#include <bits/stdc++.h>
+
+using namespace std;
+using pii = pair<int,int>;
+using ll = long long;
+
+int main() {
+    cin.tie(nullptr)->sync_with_stdio(false);
+    int n,m;cin>>n>>m;
+    vector<pii> adj[n];
+    vector<int> dist(n, INT_MAX);
+    vector<bool> flag(n);
+    int start = -1;
+    for(int i=0;i<m;i++) {
+        int u,v,w;cin>>u>>v>>w;
+        if(start == -1) start = u;
+        adj[u].push_back({v,w});
+        adj[v].push_back({u,w});
+    }
+
+    priority_queue<pii, vector<pii>, greater<pii>> pq;
+    dist[start] = 0;
+    pq.push({dist[start], start});
+    ll ans = 0;
+    while(!pq.empty()) {
+        int W = pq.top().first, u = pq.top().second;
+        pq.pop();
+
+        if(flag[u]) continue;
+        flag[u] = true;
+        ans += W;
+
+        for(auto vw:adj[u]) {
+            int v = vw.first, w = vw.second;
+            if(dist[v] > w) {
+                dist[v] = w;
+                pq.push({dist[v], v});
+            }
         }
     }
     cout<<ans<<'\n';

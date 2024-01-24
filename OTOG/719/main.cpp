@@ -1,40 +1,27 @@
 #include <bits/stdc++.h>
-#define endl '\n'
 
 using namespace std;
 using pii = pair<int,int>;
+using ll = long long;
 
-// const int N = 12345 + 10;
-int n;
-
-int f(pii l, pii r) {
-    return max(abs(l.first - r.first), abs(l.second - r.second));
-}
-
-int main () {
-    ios::sync_with_stdio(false); cin.tie(0);
-    cin >> n;
-    vector<pii> a(n);
-
-    for(int i=0;i<n;i++) cin >> a[i].first >> a[i].second;
-
+int main() {
+    cin.tie(nullptr)->sync_with_stdio(false);
+    int n;cin>>n;
     vector<int> dist(n, INT_MIN);
     vector<bool> flag(n);
+    vector<pii> a(n);
+    for(int i=0;i<n;i++) cin>>a[i].first>>a[i].second;
 
-    int u = 0;
-    int ans = 0;
-
+    int u = 0, round = n-1;
+    ll ans = 0;
     dist[u] = 0;
-
-    int round = n-1;
     while(round--) {
+        int next_u, mx = INT_MIN;
         flag[u] = true;
 
-        int next_u, mx = INT_MIN;
-
         for(int v=0;v<n;v++) {
-            if(flag[v] == true) continue;
-            dist[v] = max(dist[v], f(a[u], a[v]));
+            if(flag[v]) continue;
+            dist[v] = max(dist[v], max(abs(a[u].first - a[v].first), abs(a[u].second - a[v].second)));
             if(dist[v] > mx) {
                 mx = dist[v];
                 next_u = v;
@@ -44,5 +31,6 @@ int main () {
         u = next_u;
         ans += mx;
     }
-    cout << ans << endl;
+    cout<<ans<<'\n';
+    return 0;
 }
