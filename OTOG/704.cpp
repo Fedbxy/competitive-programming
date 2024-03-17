@@ -4,7 +4,7 @@ using namespace std;
 
 int main() {
     ios::sync_with_stdio(false);cin.tie(0);
-    freopen("i.txt","r",stdin);
+    // freopen("i.txt","r",stdin);
 
     int n;cin>>n;
     vector<int> a(n);

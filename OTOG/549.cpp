@@ -4,7 +4,7 @@ using namespace std;
 
 int main(){
     ios::sync_with_stdio(false);cin.tie(0);
-    freopen("input.txt","r",stdin);
+    // freopen("input.txt","r",stdin);
     int n;cin>>n;
     stack<int> s;
     while(n--){
