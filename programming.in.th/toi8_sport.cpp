@@ -2,20 +2,23 @@
 
 using namespace std;
 
-int k;
-
-void func(string s, int cntw, int cntl) {
-    if(cntw == k or cntl == k) {
-        for(int i=0;i<s.size();i++) cout<<s[i]<<(i==s.size()-1 ? "\n" : " ");
+void recur(int k, int w, int l, string ans) {
+    if(w >= k or l >= k) {
+        for(auto e:ans) cout << e << ' ';
+        cout << '\n';
         return;
     }
-    if(cntw + 1 <= k) func(s + "W", cntw + 1, cntl);
-    if(cntl + 1 <= k) func(s + "L", cntw, cntl + 1);
+    if(w + l > 2 * k - 1) {
+        return;
+    }
+
+    recur(k, w + 1, l, ans + 'W');
+    recur(k, w, l + 1, ans + 'L');
 }
 
 int main() {
     cin.tie(nullptr)->sync_with_stdio(false);
-    int a,b;cin>>k>>a>>b;
-    func("", a, b);
+    int k, a, b; cin >> k >> a >> b;
+    recur(k, a, b, "");
     return 0;
 }

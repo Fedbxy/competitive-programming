@@ -1,69 +1,55 @@
 #include <bits/stdc++.h>
 
 using namespace std;
-using ll = long long;
-using pii = pair<int,int>;
+using pii = pair<int, int>;
+
+void dijkstra(vector<pii> *adj, vector<int> &dist, vector<bool> &flag, int s) {
+    priority_queue<pii, vector<pii>, greater<pii>> pq;
+    dist[s] = 0;
+    pq.emplace(dist[s], s);
+    while(!pq.empty()) {
+        auto [d, u] = pq.top();
+        pq.pop();
+
+        if(flag[u]) continue;
+        flag[u] = true;
+
+        for(auto [v, w]: adj[u]) {
+            if(flag[v]) continue;
+            if(dist[v] > d + w) {
+                dist[v] = d + w;
+                pq.emplace(dist[v], v);
+            }
+        }
+    }
+}
 
 int main() {
     cin.tie(nullptr)->sync_with_stdio(false);
-    int n,m;cin>>n>>m;
-    int s,t,budget;cin>>s>>t>>budget;
-
+    int n, m; cin >> n >> m;
+    int s, t, k; cin >> s >> t >> k;
     vector<pii> adj[n];
-    vector<bool> flag1(n), flag2(n);
-    vector<int> dist1(n, INT_MAX), dist2(n, INT_MAX);
-    priority_queue<pii, vector<pii>, greater<pii>> pq;
     for(int i=0;i<m;i++) {
-        int u,v,w;cin>>u>>v>>w;
-        adj[u].push_back(make_pair(v,w));
-        adj[v].push_back(make_pair(u,w));
+        int u, v, w; cin >> u >> v >> w;
+        adj[u].emplace_back(v, w);
+        adj[v].emplace_back(u, w);
     }
 
-    dist1[s] = 0;
-    pq.push(make_pair(dist1[s], s));
-    while(!pq.empty()) {
-        int u = pq.top().second;
-        pq.pop();
+    vector<int> dist1(n, INT_MAX), dist2(n, INT_MAX);
+    vector<bool> flag1(n), flag2(n);
+    dijkstra(adj, dist1, flag1, s);
+    dijkstra(adj, dist2, flag2, t);
 
-        if(flag1[u]) continue;
-        flag1[u] = true;
-
-        for(auto vw:adj[u]) {
-            int v = vw.first, w = vw.second;
-            if(flag1[v]) continue;
-            if(dist1[v] > dist1[u] + w) {
-                dist1[v] = dist1[u] + w;
-                pq.push(make_pair(dist1[v], v));
-            }
+    vector<int> sel;
+    for(int i=0;i<n;i++) if(dist1[i] <= k) sel.push_back(i);
+    sort(sel.begin(), sel.end());
+    int idx, mn = INT_MAX;
+    for(auto e:sel) {
+        if(dist2[e] < mn) {
+            idx = e;
+            mn = dist2[e];
         }
     }
-
-    dist2[t] = 0;
-    pq.push(make_pair(dist2[t], t));
-    while(!pq.empty()) {
-        int u = pq.top().second;
-        pq.pop();
-
-        if(flag2[u]) continue;
-        flag2[u] = true;
-
-        for(auto vw:adj[u]) {
-            int v = vw.first, w = vw.second;
-            if(flag2[v]) continue;
-            if(dist2[v] > dist2[u] + w) {
-                dist2[v] = dist2[u] + w;
-                pq.push(make_pair(dist2[v], v));
-            }
-        }
-    }
-
-    int mn = INT_MAX, ans;
-    for(int i=0;i<n;i++) {
-        if(dist1[i] <= budget and dist2[i] < mn) {
-            mn = dist2[i];
-            ans = i;
-        }
-    }
-    cout<<ans<<' '<<dist1[ans]<<' '<<dist2[ans]<<'\n';
+    cout << idx << ' ' << dist1[idx] << ' ' << dist2[idx] << '\n'; 
     return 0;
 }

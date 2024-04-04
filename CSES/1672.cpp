@@ -5,28 +5,21 @@ using ll = long long;
 
 int main() {
     cin.tie(nullptr)->sync_with_stdio(false);
-    int n,m,q;cin>>n>>m>>q;
+    int n, m, q; cin >> n >> m >> q;
     ll dist[n+1][n+1];
-    for(int i=1;i<=n;i++) for(int j=1;j<=n;j++) {
-        if(i == j) dist[i][j] = 0;
-        else dist[i][j] = LLONG_MAX;
-    }
+    for(int i=1;i<=n;i++) for(int j=1;j<=n;j++) dist[i][j] = (i == j ? 0 : LLONG_MAX);
     for(int i=0;i<m;i++) {
-        int u,v;ll w;cin>>u>>v>>w;
-        dist[u][v] = min(dist[u][v], w);
-        dist[v][u] = min(dist[v][u], w);
+        int u, v, w; cin >> u >> v >> w;
+        dist[u][v] = min(dist[u][v], 1LL * w);
+        dist[v][u] = min(dist[v][u], 1LL * w);
     }
-    for(int k=1;k<=n;k++) {
-        for(int i=1;i<=n;i++) {
-            for(int j=1;j<=n;j++) {
-                if(dist[i][k] == LLONG_MAX or dist[k][j] == LLONG_MAX) continue;
-                dist[i][j] = min(dist[i][j], dist[i][k] + dist[k][j]);
-            }
-        }
-    }
+
+    for(int k=1;k<=n;k++) for(int i=1;i<=n;i++) for(int j=1;j<=n;j++) if(dist[i][k] != LLONG_MAX and dist[k][j] != LLONG_MAX) dist[i][j] = min(dist[i][j], dist[i][k] + dist[k][j]);
+    
     while(q--) {
-        int u,v;cin>>u>>v;
-        cout<<(dist[u][v] == LLONG_MAX ? -1 : dist[u][v])<<'\n';
+        int u, v; cin >> u >> v;
+        ll ans = dist[u][v];
+        cout << (ans == LLONG_MAX ? -1 : ans) << '\n';
     }
     return 0;
 }
