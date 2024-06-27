@@ -3,21 +3,29 @@
 using namespace std;
 
 int main(){
-    ios::sync_with_stdio(false);cin.tie(0);
-    int n;cin>>n;
-    int count=1;
-    for(int i=1;i<=n;i++){
-        for(int j=i;j>=1;j--){
-            if((i*2)%int(pow(2,j))==0){
-                cout<<count<<": ";
-                count++;
-                for(int k=0;k<j;k++){
-                    cout<<"*";
-                }
-                cout<<"\n";
-                break;
-            }
+    cin.tie(nullptr)->sync_with_stdio(false);
+
+    int n; cin >> n;
+    vector<int> a;
+
+    int cnt = 0;
+    while(true) {
+        a.emplace_back(++cnt);
+        if(a.size() == n) goto done;
+
+        int temp = a.size() - 1;
+        for(int i=0;i<temp;++i) {
+            a.emplace_back(a[i]);
+            if(a.size() == n) goto done;
         }
     }
+
+    done:
+    for(int i=0;i<n;++i) {
+        cout << i + 1 << ": ";
+        for(int j=0;j<a[i];++j) cout << '*';
+        cout << '\n';
+    }
+
     return 0;
 }
