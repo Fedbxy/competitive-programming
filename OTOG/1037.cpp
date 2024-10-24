@@ -9,8 +9,8 @@ bool check(string& s, int i, int j) {
 }
 
 int main() {
-    cin.tie(nullptr)->sync_with_stdio(false);
-    string s; cin >> s;
-    cout << (check(s, 0, s.size() - 1) ? "yes" : "no") << '\n';
+    char tmp[100001]; scanf("%s", tmp);
+    string s; s = string(tmp);
+    check(s, 0, s.size() - 1) ? printf("yes") : printf("no");
     return 0;
 }

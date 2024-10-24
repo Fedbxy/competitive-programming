@@ -3,11 +3,10 @@
 using namespace std;
 
 int main() {
-    cin.tie(nullptr)->sync_with_stdio(false);
-    int n; cin >> n;
+    int n; scanf("%d", &n);
     vector<int> a(n), b(n);
-    for (auto &e: a) cin >> e;
-    for (auto &e: b) cin >> e;
+    for (auto &e: a) scanf("%d", &e);
+    for (auto &e: b) scanf("%d", &e);
 
     vector<int> ans(n);
     vector<bool> used(n);
@@ -18,6 +17,6 @@ int main() {
         ++i;
     }
 
-    for (auto &e: ans) cout << e << '\n';
+    for (auto &e: ans) printf("%d\n", e);
     return 0;
 }
